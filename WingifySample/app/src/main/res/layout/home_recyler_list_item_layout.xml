@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/z_white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tweettext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/z_margin_large"
+        android:text="Hello"
+        android:textColor="@color/z_text_color_dark" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/z_grey_shade_2" />
+
+</LinearLayout>

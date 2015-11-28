@@ -3,14 +3,17 @@ package com.wingify.ashishgoel.wingifysample.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.wingify.ashishgoel.wingifysample.R;
 import com.wingify.ashishgoel.wingifysample.extras.AppConstants;
+import com.wingify.ashishgoel.wingifysample.preferences.ZPreferences;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
+import twitter4j.User;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import twitter4j.conf.Configuration;
@@ -33,6 +36,50 @@ public class LaunchActivity extends BaseActivity implements View.OnClickListener
 
         loginButton = (LinearLayout) findViewById(R.id.loginlayout);
         loginButton.setOnClickListener(this);
+
+        checkIfRedirectedFromBrowserAfterLogin();
+    }
+
+    private void checkIfRedirectedFromBrowserAfterLogin() {
+        Uri uri = getIntent().getData();
+        if (uri != null && uri.toString().startsWith(AppConstants.TWITTER_CALLBACK_URL)) {
+            final String verifier = uri
+                    .getQueryParameter(AppConstants.URL_TWITTER_OAUTH_VERIFIER);
+            try {
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            LaunchActivity.this.accessToken = twitter.getOAuthAccessToken(
+                                    requestToken, verifier);
+
+                            ZPreferences.setAccessToken(LaunchActivity.this, accessToken.getToken());
+                            ZPreferences.setAccessToeknSecret(LaunchActivity.this, accessToken.getTokenSecret());
+                            long userID = accessToken.getUserId();
+                            ZPreferences.setUserProfileID(LaunchActivity.this, userID + "");
+                            User user = twitter.showUser(userID);
+                            String username = user.getName();
+                            ZPreferences.setUserName(LaunchActivity.this, username);
+
+                            switchToHomeActivity();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thread.start();
+            } catch (Exception e) {
+                Log.e("Twitter Login Error", "> " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void switchToHomeActivity() {
+        ZPreferences.setIsUserLogin(this, true);
+
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
     }
 
     @Override

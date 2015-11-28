@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.wingify.ashishgoel.wingifysample.R;
+import com.wingify.ashishgoel.wingifysample.preferences.ZPreferences;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -28,6 +29,10 @@ public class SplashActivity extends BaseActivity {
 
     private void switchToHomeOrLoginActivity() {
         Intent intent = new Intent(this, LaunchActivity.class);
+        if (ZPreferences.isUserLogIn(this)) {
+            intent = new Intent(this, HomeActivity.class);
+        }
         startActivity(intent);
+        this.finish();
     }
 }
