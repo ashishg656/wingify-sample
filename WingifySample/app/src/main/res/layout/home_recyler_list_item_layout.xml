@@ -18,7 +18,7 @@
             android:paddingBottom="10dp"
             android:paddingLeft="@dimen/z_margin_large">
 
-            <com.pkmmte.view.CircularImageView
+            <widgets.CircularImageView
                 android:id="@+id/circularimage"
                 android:layout_width="@dimen/z_tweet_user_image_height"
                 android:layout_height="@dimen/z_tweet_user_image_height"

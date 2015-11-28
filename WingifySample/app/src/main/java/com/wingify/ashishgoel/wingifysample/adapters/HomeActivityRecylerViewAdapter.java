@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.pkmmte.view.CircularImageView;
 import com.wingify.ashishgoel.wingifysample.R;
 import com.wingify.ashishgoel.wingifysample.extras.AppConstants;
 import com.wingify.ashishgoel.wingifysample.utils.ImageRequestManager;
@@ -97,12 +96,12 @@ public class HomeActivityRecylerViewAdapter extends RecyclerView.Adapter<Recycle
 
     class TweetHolder extends RecyclerView.ViewHolder {
 
-        CircularImageView circularImageView;
+        widgets.CircularImageView circularImageView;
         TextView tweetText, time, name;
 
         public TweetHolder(View v) {
             super(v);
-            circularImageView = (CircularImageView) v.findViewById(R.id.circularimage);
+            circularImageView = (widgets.CircularImageView) v.findViewById(R.id.circularimage);
             tweetText = (TextView) v.findViewById(R.id.comment);
             time = (TextView) v.findViewById(R.id.time);
             name = (TextView) v.findViewById(R.id.uploadrname);
