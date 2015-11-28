@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.pkmmte.view.CircularImageView;
 import com.wingify.ashishgoel.wingifysample.R;
 import com.wingify.ashishgoel.wingifysample.extras.AppConstants;
+import com.wingify.ashishgoel.wingifysample.utils.ImageRequestManager;
 
 import java.util.List;
 
@@ -22,10 +24,12 @@ public class HomeActivityRecylerViewAdapter extends RecyclerView.Adapter<Recycle
 
     Context context;
     List<Status> mData;
+    boolean isMoreAllowed;
 
-    public HomeActivityRecylerViewAdapter(Context context, List<Status> mData) {
+    public HomeActivityRecylerViewAdapter(Context context, List<Status> mData, boolean moreAllowed) {
         this.context = context;
         this.mData = mData;
+        this.isMoreAllowed = moreAllowed;
     }
 
     @Override
@@ -47,7 +51,14 @@ public class HomeActivityRecylerViewAdapter extends RecyclerView.Adapter<Recycle
         if (getItemViewType(pos) == VIEWTYPE_TWEET) {
             TweetHolder holder = (TweetHolder) viewHolder;
             Status status = mData.get(pos);
-            holder.tweetText.setText(pos + " - " + status.getId() + " - " + status.getUser().getScreenName() + " - " + status.getText() + " \n\n time " + status.getCreatedAt());
+
+            holder.name.setText(status.getUser().getName());
+            holder.time.setText(status.getCreatedAt() + "");
+            holder.tweetText.setText(status.getText());
+
+            if (status.getUser().getBiggerProfileImageURL() != null) {
+                ImageRequestManager.get(context).requestImage(context, holder.circularImageView, status.getUser().getBiggerProfileImageURL(), -1);
+            }
         }
     }
 
@@ -61,11 +72,14 @@ public class HomeActivityRecylerViewAdapter extends RecyclerView.Adapter<Recycle
 
     @Override
     public int getItemCount() {
+        if (!isMoreAllowed)
+            return mData.size();
         return mData.size() + 1;
     }
 
-    public void addData(List<Status> tweets) {
+    public void addData(List<Status> tweets, boolean isMoreAllowed) {
         mData.addAll(tweets);
+        this.isMoreAllowed = isMoreAllowed;
         notifyDataSetChanged();
     }
 
@@ -83,11 +97,15 @@ public class HomeActivityRecylerViewAdapter extends RecyclerView.Adapter<Recycle
 
     class TweetHolder extends RecyclerView.ViewHolder {
 
-        TextView tweetText;
+        CircularImageView circularImageView;
+        TextView tweetText, time, name;
 
         public TweetHolder(View v) {
             super(v);
-            tweetText = (TextView) v.findViewById(R.id.tweettext);
+            circularImageView = (CircularImageView) v.findViewById(R.id.circularimage);
+            tweetText = (TextView) v.findViewById(R.id.comment);
+            time = (TextView) v.findViewById(R.id.time);
+            name = (TextView) v.findViewById(R.id.uploadrname);
         }
     }
 }

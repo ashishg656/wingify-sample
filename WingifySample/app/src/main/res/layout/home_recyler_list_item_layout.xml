@@ -5,17 +5,74 @@
     android:background="@color/z_white"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tweettext"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/z_margin_large"
-        android:text="Hello"
-        android:textColor="@color/z_text_color_dark" />
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingLeft="@dimen/z_margin_large">
+
+            <com.pkmmte.view.CircularImageView
+                android:id="@+id/circularimage"
+                android:layout_width="@dimen/z_tweet_user_image_height"
+                android:layout_height="@dimen/z_tweet_user_image_height"
+                android:layout_marginTop="10dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/z_margin_small"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/uploadrname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ashish Goel"
+                        android:textColor="@color/z_text_color_dark"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3 days ago"
+                        android:textColor="@color/z_text_color_light"
+                        android:textSize="@dimen/z_font_supermini" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/z_margin_large"
+                    android:layout_marginTop="@dimen/z_margin_supermini"
+                    android:textColor="@color/z_text_color_dark" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="10dp"
         android:background="@color/z_grey_shade_2" />
 
 </LinearLayout>
