@@ -42,7 +42,11 @@ public class LaunchActivity extends BaseActivity implements View.OnClickListener
 
         kenBurnsSupportView.setResourceIds("http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image1.jpg", "http://36.media.tumblr.com/b43f7777e74a5490149c7ac2e49e6a31/tumblr_n3s22aQyL21r0x13uo1_500.jpg");
 
-        checkIfRedirectedFromBrowserAfterLogin();
+        if (ZPreferences.isUserLogIn(this)) {
+            Intent i = new Intent(this, HomeActivity.class);
+        } else {
+            checkIfRedirectedFromBrowserAfterLogin();
+        }
     }
 
     private void checkIfRedirectedFromBrowserAfterLogin() {
