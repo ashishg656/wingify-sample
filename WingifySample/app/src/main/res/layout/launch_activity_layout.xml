@@ -4,11 +4,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <widgets.KenBurnsSupportView
+        android:id="@+id/kenburns"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <LinearLayout
         android:id="@+id/loginlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:layout_margin="@dimen/z_margin_large"
         android:background="#1dcaff"
         android:padding="@dimen/z_margin_large">
 

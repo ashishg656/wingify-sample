@@ -18,6 +18,7 @@ import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
+import widgets.KenBurnsSupportView;
 
 /**
  * Created by Ashish Goel on 11/27/2015.
@@ -28,6 +29,7 @@ public class LaunchActivity extends BaseActivity implements View.OnClickListener
     private static Twitter twitter;
     private static RequestToken requestToken;
     private AccessToken accessToken;
+    KenBurnsSupportView kenBurnsSupportView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,9 @@ public class LaunchActivity extends BaseActivity implements View.OnClickListener
 
         loginButton = (LinearLayout) findViewById(R.id.loginlayout);
         loginButton.setOnClickListener(this);
+        kenBurnsSupportView = (KenBurnsSupportView) findViewById(R.id.kenburns);
+
+        kenBurnsSupportView.setResourceIds("http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image1.jpg", "http://36.media.tumblr.com/b43f7777e74a5490149c7ac2e49e6a31/tumblr_n3s22aQyL21r0x13uo1_500.jpg");
 
         checkIfRedirectedFromBrowserAfterLogin();
     }
