@@ -1,28 +1,30 @@
 package com.wingify.ashishgoel.wingifysample.activities;
 
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.wingify.ashishgoel.wingifysample.R;
 import com.wingify.ashishgoel.wingifysample.extras.AppConstants;
-import com.wingify.ashishgoel.wingifysample.utils.TwitterUtil;
 
 import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
+import twitter4j.conf.Configuration;
+import twitter4j.conf.ConfigurationBuilder;
 
 /**
  * Created by Ashish Goel on 11/27/2015.
  */
 public class LaunchActivity extends BaseActivity implements View.OnClickListener {
 
-    private static final int LOGIN_REQUEST_CODE_WEBVIEW_ACTIVITY = 105;
     LinearLayout loginButton;
-
     private static Twitter twitter;
     private static RequestToken requestToken;
+    private AccessToken accessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,23 +45,31 @@ public class LaunchActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void requestForLoginThroughTwitter() {
-        new TwitterAuthenticateTask().execute();
-    }
+        ConfigurationBuilder builder = new ConfigurationBuilder();
+        builder.setOAuthConsumerKey(AppConstants.TWITTER_CONSUMER_KEY);
+        builder.setOAuthConsumerSecret(AppConstants.TWITTER_CONSUMER_SECRET);
+        Configuration configuration = builder.build();
 
-    class TwitterAuthenticateTask extends AsyncTask<String, String, RequestToken> {
+        TwitterFactory factory = new TwitterFactory(configuration);
+        twitter = factory.getInstance();
 
-        @Override
-        protected void onPostExecute(RequestToken requestToken) {
-            if (requestToken != null) {
-                Intent intent = new Intent(LaunchActivity.this, OAuthActivity.class);
-                intent.putExtra(AppConstants.STRING_EXTRA_AUTHENCATION_URL, requestToken.getAuthenticationURL());
-                startActivity(intent);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    requestToken = twitter
+                            .getOAuthRequestToken(AppConstants.TWITTER_CALLBACK_URL);
+                    LaunchActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri
+                            .parse(requestToken.getAuthenticationURL())));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }
-
-        @Override
-        protected RequestToken doInBackground(String... params) {
-            return TwitterUtil.getInstance().getRequestToken();
-        }
+        });
+        thread.start();
     }
+
+
 }
