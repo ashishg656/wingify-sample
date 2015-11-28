@@ -24,7 +24,7 @@
             android:name=".activities.LaunchActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".activities.WebViewActivity"
+            android:name=".activities.OAuthActivity"
             android:label="@string/app_name" />
     </application>
 

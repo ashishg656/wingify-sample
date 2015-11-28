@@ -1,18 +1,17 @@
 package com.wingify.ashishgoel.wingifysample.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.wingify.ashishgoel.wingifysample.R;
+import com.wingify.ashishgoel.wingifysample.extras.AppConstants;
+import com.wingify.ashishgoel.wingifysample.utils.TwitterUtil;
 
 import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
 import twitter4j.auth.RequestToken;
-import twitter4j.conf.Configuration;
-import twitter4j.conf.ConfigurationBuilder;
 
 /**
  * Created by Ashish Goel on 11/27/2015.
@@ -44,22 +43,23 @@ public class LaunchActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void requestForLoginThroughTwitter() {
-        final ConfigurationBuilder builder = new ConfigurationBuilder();
-        builder.setOAuthConsumerKey(getString(R.string.twitter_consumer_key));
-        builder.setOAuthConsumerSecret(getString(R.string.twitter_consumer_secret));
+        new TwitterAuthenticateTask().execute();
+    }
 
-        final Configuration configuration = builder.build();
-        final TwitterFactory factory = new TwitterFactory(configuration);
-        twitter = factory.getInstance();
+    class TwitterAuthenticateTask extends AsyncTask<String, String, RequestToken> {
 
-        try {
-            requestToken = twitter.getOAuthRequestToken(getString(R.string.twitter_callback));
+        @Override
+        protected void onPostExecute(RequestToken requestToken) {
+            if (requestToken != null) {
+                Intent intent = new Intent(LaunchActivity.this, OAuthActivity.class);
+                intent.putExtra(AppConstants.STRING_EXTRA_AUTHENCATION_URL, requestToken.getAuthenticationURL());
+                startActivity(intent);
+            }
+        }
 
-            final Intent intent = new Intent(this, WebViewActivity.class);
-            intent.putExtra(WebViewActivity.EXTRA_URL, requestToken.getAuthenticationURL());
-            startActivityForResult(intent, LOGIN_REQUEST_CODE_WEBVIEW_ACTIVITY);
-        } catch (TwitterException e) {
-            e.printStackTrace();
+        @Override
+        protected RequestToken doInBackground(String... params) {
+            return TwitterUtil.getInstance().getRequestToken();
         }
     }
 }

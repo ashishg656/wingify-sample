@@ -4,7 +4,4 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-    <string name="twitter_callback">http://www.google.com</string>
-    <string name="twitter_consumer_key">5xcPiCUNCyddIzo9p1SgXGBCW</string>
-    <string name="twitter_consumer_secret">ZGHDON4531EGvpSTAoa51NIKLGOb2MXfuqgoEGdBGsuWVdEYrx</string>
 </resources>
