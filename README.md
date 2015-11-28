@@ -8,6 +8,8 @@ Works fine in any device orientation.
 
 Uses Twitter Outh1 for user login to make API calls.
 
+Tweets which are created more that one minute before,show time properly formatted as 5 minutes ago, 2 days ago etc. Posts created less than one minute ago are showing complete date as Date class toString method.
+
 Shows a basic list of tweets, which are fetched 20 at a time (lazy loading).The amount 20 can be changed from the application code.
 
 Limitations - 
