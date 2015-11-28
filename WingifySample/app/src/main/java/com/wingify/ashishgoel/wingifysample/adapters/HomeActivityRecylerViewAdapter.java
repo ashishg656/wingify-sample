@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.wingify.ashishgoel.wingifysample.R;
 import com.wingify.ashishgoel.wingifysample.extras.AppConstants;
 import com.wingify.ashishgoel.wingifysample.utils.ImageRequestManager;
+import com.wingify.ashishgoel.wingifysample.utils.TimeUtils;
 
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class HomeActivityRecylerViewAdapter extends RecyclerView.Adapter<Recycle
             Status status = mData.get(pos);
 
             holder.name.setText(status.getUser().getName());
-            holder.time.setText(status.getCreatedAt() + "");
+            holder.time.setText(TimeUtils.getPostTime(status.getCreatedAt()));
             holder.tweetText.setText(status.getText());
 
             if (status.getUser().getBiggerProfileImageURL() != null) {
