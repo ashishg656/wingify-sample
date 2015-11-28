@@ -106,6 +106,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                     searchAsyncTaskForRefreshingAfter2Secondsnterval.cancel(true);
 
                 adapter = null;
+                iDForPageRefresh = null;
+                nextIDForLaZyLoading = null;
 
                 stringToSearch = searchEditText.getText().toString().trim();
                 searchAsyncTask = new SearchAsyncTask();
