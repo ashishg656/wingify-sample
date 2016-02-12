@@ -1,3 +1,8 @@
+Twitter Hashtag Search
+
+Made a simple application that could be used to search posts having tags searched by user from Twitter. Used Twitter api to fetch posts and for authentication. Posts are updated real time by querying for new posts and updating the application if new posts are found from Twitter api.
+
+
 Introduction -
 Android Application to display twitter posts with specified hashtag.
 Tweets are searched based on the input hashtag.
